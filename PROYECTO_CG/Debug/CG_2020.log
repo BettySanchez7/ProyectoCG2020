@@ -1,0 +1,4 @@
+﻿  main_prac9.cpp
+c:\users\bety-\documents\cg\cg_2020\cg_2020\main_prac9.cpp(497): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+c:\users\bety-\documents\cg\cg_2020\cg_2020\main_prac9.cpp(504): warning C4244: 'argumento': conversión de 'double' a 'float'; posible pérdida de datos
+  CG_2020.vcxproj -> C:\Users\bety-\Documents\CG\CG_2020\Debug\CG_2020.exe
