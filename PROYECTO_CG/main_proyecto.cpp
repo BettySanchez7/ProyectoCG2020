@@ -45,8 +45,8 @@ lastFrame = 0.0f;
 glm::vec3 lightPosition(0.0f, 4.0f, 3.0f);
 glm::vec3 lightDirection(0.0f, -1.0f, 0.0f);
 
-void myData(void);
-void myData2(void);
+void casas(void);
+void planos(void);
 void display(Shader, Model, Model, Model, Model);
 void getResolution(void);
 void animate(void);
@@ -55,7 +55,21 @@ unsigned int generateTextures(char*, bool);
 
 //Texture
 unsigned int t_dado,
-			t_pasto;
+			t_pasto,
+			t_edificio,
+			t_edificio21,
+			t_edificio22,
+			t_edificio23,
+			t_piso1,
+			t_torrel1,
+			t_torrel2,
+			t_torrel3,
+			t_edificio3,
+			t_carretera,
+			t_carretera2,
+			t_blanco,
+			t_iglesia1,
+			t_iglesia2;
 
 //For model
 bool animacion = false;
@@ -112,52 +126,62 @@ void getResolution()
 void LoadTextures()
 {
 	glActiveTexture(GL_TEXTURE2);
-	t_dado = generateTextures("Texturas/casatextura.jpg", 0);
 	t_pasto = generateTextures("Texturas/pasto.jpg", 0);
-
-
+	t_edificio = generateTextures("Texturas/edificio1.jpg", 0);
+	t_edificio21 = generateTextures("Texturas/edificio2_1.jpg", 0);
+	t_edificio22 = generateTextures("Texturas/edificio2_2.jpg", 0);
+	t_edificio23 = generateTextures("Texturas/edificio2_3.jpg", 0);
+	t_piso1 = generateTextures("Texturas/gris2.jpg", 0);
+	t_torrel1= generateTextures("Texturas/Partebajotorre.jpg", 0);
+	t_torrel2= generateTextures("Texturas/Parteenmediotorre.jpg", 0);
+	t_torrel3= generateTextures("Texturas/Partearribatorre.jpg", 0);
+	t_edificio3= generateTextures("Texturas/edificio3.jpg", 0);
+	t_carretera = generateTextures("Texturas/carretera.jpg", 0);
+	t_carretera2 = generateTextures("Texturas/carretera2.jpg", 0);
+	t_blanco = generateTextures("Texturas/Texturaspasillo.jpg", 0);
+	t_iglesia1= generateTextures("Texturas/iglesia1.jpg", 0);
+	t_iglesia2 = generateTextures("Texturas/iglesia1_2.jpg", 0);
 }
 
-void myData()
+void casas()
 {
 	float vertices[] = {
 		// positions		//Normals			// texture coords
 		// Frontal								// S		T	
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.589f, 0.365f, //V0 -> top right
-		0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.589f, 0.665f, //V1 -> bottom right 
-	   -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.389f, 0.665f, //V2 -> bottom left
-	   -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, -1.0f, 0.389f, 0.365f, //V3 -> top left
-
+		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.5f, 0.5f, //V0 -> top right
+		0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.5f, 0.75f, //V1 -> bottom right 
+	   -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.25f, 0.75f, //V2 -> bottom left
+	   -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, -1.0f, 0.25f, 0.5f, //V3 -> top left
 
 		// Derecha
-		0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.787f, 0.665f, //V5 -> top right
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.787f, 0.365f, //V4 -> bottom right
-		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.589f, 0.365f, //V1 -> bottom left
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.589f, 0.365f, //V0 -> top left
+		0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.75f, 0.5f, //V5 -> top right
+		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 0.75f, 0.75f, //V4 -> bottom right
+		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.5f,  0.75f, //V1 -> bottom left
+		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.5f,  0.5f, //V0 -> top left
 
 		// Trasera
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.589f, 0.365f, //V6 -> bottom right
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.787f, 0.365f, //V4 -> bottom left
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.787f, 0.665f, //V5 -> top left
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.984f, 0.365f, //V7 -> top right
+		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	1.0f, 0.75f, //V6 -> bottom right
+		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.75f, 0.75f, //V4 -> bottom left
+		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.75f, 0.5f, //V5 -> top left
+		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	1.0f, 0.5f, //V7 -> top right
 
 		// Izquierda
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	0.192f, 0.365f, //V6 -> bottom left
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,	0.389f, 0.365f, //V2 -> bottom right
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,	0.389f, 0.665f, //V3 -> top right
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	0.192f, 0.665f, //V7 -> top left
+		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	0.75f,  0.75f, //V6 -> bottom left
+		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,	1.0f, 0.75f, //V2 -> bottom right
+		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,	1.0f, 0.5f, //V3 -> top right
+		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	0.75f,  0.5f, //V7 -> top left
 
 		// Inferior - y negativo
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,	0.389f, 0.365f, //V2 -> top left   
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,	0.589f, 0.365f, //V1 -> top right
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	0.589f, 0.173f, //V4 -> bottom right
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	0.389f, 0.173f, //V6 -> bottom left
+		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,	0.25f, 0.75f, //V2 -> top left   
+		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,	0.5f, 0.75f, //V1 -> top right
+		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	0.5f, 1.0f, //V4 -> bottom right
+		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	0.25f, 1.0f, //V6 -> bottom left
 
 		//Superior - y positivo
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	0.389f, 0.665f, //V3 ->	bottom left
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	0.589f, 0.665f, //V0 -> bottom right 
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.589f, 0.857f, //V5 -> top right
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.389f, 0.857f //V7 -> top left
+		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	0.25f, 0.5f, //V3 ->	bottom left
+		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	0.5f, 0.5f, //V0 -> bottom right 
+		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.5f, 0.25f, //V5 -> top right
+		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.25f, 0.25f //V7 -> top left
 	};
 
 	unsigned int indices[] = {
@@ -205,67 +229,57 @@ void myData()
 
 }
 
-void myData2()
+void planos()
 {
 	float vertices[] = {
-		// positions		//Normals			// texture coords
-		// Frontal								// S		T	
-		0.5f,  0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 10.0f, 10.0f, //V0 -> top right
-		0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 2.0f, 0.0f, //V1 -> bottom right 
-	   -0.5f, -0.5f,  0.5f,  0.0f,  0.0f,  0.0f, 0.0f, 0.0f, //V2 -> bottom left
-	   -0.5f,  0.5f,  0.5f,  0.0f,  0.0f, -1.0f, 00.0f, 10.0f, //V3 -> top left
 
+		//BASE
+		-0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 0.0f, //V3 ->	bottom left
+		 0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,	10.0f, 0.0f, //V0 -> bottom right 
+		 0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,	10.0f, 5.0f, //V5 -> top right
+		-0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 5.0f, //V7 -> top left
 
-		// Derecha
-		0.5f,  0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 10.0f, 10.0f, //V5 -> top right
-		0.5f, -0.5f, -0.5f,  1.0f,  0.0f,  0.0f, 2.0f, 0.0f, //V4 -> bottom right
-		0.5f, -0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 0.0f, //V1 -> bottom left
-		0.5f,  0.5f,  0.5f,  1.0f,  0.0f,  0.0f, 0.0f, 10.0f, //V0 -> top left
+		//CARRETERA
+		- 0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 0.0f, //V3 ->	bottom left
+		 0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,	1.0f, 0.0f, //V0 -> bottom right 
+		 0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,	1.0f, 10.0f, //V5 -> top right
+		-0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 10.0f ,//V7 -> top left
 
-		// Trasera
-		-0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	10.0f, 10.0f, //V6 -> bottom right
-		 0.5f, -0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	2.0f, 10.0f, //V4 -> bottom left
-		 0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.0f, 0.0f, //V5 -> top left
-		-0.5f,  0.5f, -0.5f,  0.0f,  0.0f, -1.0f,	0.0f, 10.0f, //V7 -> top right
+		- 0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 0.0f, //V3 ->	bottom left
+		 0.5f,  0.0f,  0.5f,  0.0f,  1.0f,  0.0f,	10.0f, 0.0f, //V0 -> bottom right 
+		 0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,	10.0f, 1.0f, //V5 -> top right
+		-0.5f,  0.0f, -0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 1.0f, //V7 -> top left
+		
+		//PASILLOS ALAMEDA
+		   22.0f,  0.0f,  20.0f,  0.0f,  1.0f,  0.0f,	0.0f, 0.0f, //V3 ->	bottom left
+		  24.0f,  0.0f,  20.0f, 0.0f,  1.0f,  0.0f,	  10.0f, 0.0f, //V0 -> bottom right 
+		  -24.0f,  0.0f, -20.0f,  0.0f,  1.0f,  0.0f,	10.0f, 5.0f, //V5 -> top right
+		 -26.0f,  0.0f, -20.0f, 0.0f,  1.0f,  0.0f,	0.0f, 5.0f, //V7 -> top left
 
-		// Izquierda
-		-0.5f, -0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	10.0f, 10.0f, //V6 -> bottom left
-		-0.5f, -0.5f,  0.5f, -1.0f,  0.0f,  0.0f,	2.0f, 10.0f, //V2 -> bottom right
-		-0.5f,  0.5f,  0.5f, -1.0f,  0.0f,  0.0f,	0.0f, 0.0f, //V3 -> top right
-		-0.5f,  0.5f, -0.5f, -1.0f,  0.0f,  0.0f,	0.0f, 10.0f, //V7 -> top left
-
-		// Inferior - y negativo
-		-0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,	10.0f, 10.0f, //V2 -> top left   
-		 0.5f, -0.5f,  0.5f,  0.0f, -1.0f,  0.0f,	2.0f, 10.0f, //V1 -> top right
-		 0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	0.0f, 0.0f, //V4 -> bottom right
-		-0.5f, -0.5f, -0.5f,  0.0f, -1.0f,  0.0f,	0.0f, 10.0f, //V6 -> bottom left
-
-		//Superior - y positivo
-		-0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	10.0f, 10.0f, //V3 ->	bottom left
-		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	2.0f, 10.0f, //V0 -> bottom right 
-		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 0.0f, //V5 -> top right
-		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.0f, 10.0f, //V7 -> top left
+		 -26.0f,  0.0f,  20.0f,  0.0f,  1.0f,  0.0f,	0.0f, 0.0f, //V3 ->	bottom left
+		 -24.0f,  0.0f,  20.0f, 0.0f,  1.0f,  0.0f,	  10.0f, 0.0f, //V0 -> bottom right 
+		  26.0f,  0.0f,  -20.0f,  0.0f,  1.0f,  0.0f,	10.0f, 5.0f, //V5 -> top right
+		 24.0f,  0.0f,  -20.0f,  1.0f,  0.0f,	0.0f, 5.0f //V7 -> top left
 	};
 
 	unsigned int indices[] = {
-		//Frontal
-		0, 1, 3, //3
-		1, 2, 3, //6
-		//right
-		4, 5, 6, //9
-		6, 7, 4, //12
-		// Trasera
-		8, 9, 10, //15
-		10, 11, 8, //18
-		// Izquierda
-		12, 13, 14, //21
-		14, 15, 12, //24
-		// Inferior
-		16, 17, 18, //27
-		18, 19, 16, //30
-		// Superior
-		20, 21, 22, //33
-		22, 23, 20 //36
+		//PISO
+		0, 1, 2, //3
+		0, 2, 3, //6
+		//CARRETERA
+		4,5,6,//9
+		4,6,7,//12
+
+		8,9,10,//15
+		8,10,11,//18
+		
+		12,13,14,//
+		12,14,15,//
+
+		16,17,18,
+		16,18,19
+
+
 	};
 
 	glGenVertexArrays(1, &pastoVAO);
@@ -302,7 +316,8 @@ void animate(void)
 	}
 }
 
-void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny_phantom)
+void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny_phantom,
+		Model mansionLego, Model legoHouse, Model legoHome)
 {
 	shader.use();
 
@@ -310,7 +325,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	shader.setVec3("viewPos", camera.Position);
 	shader.setVec3("dirLight.direction", lightDirection);
 	shader.setVec3("dirLight.ambient", glm::vec3(0.0f, 0.0f, 0.0f));
-	shader.setVec3("dirLight.diffuse", glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setVec3("dirLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 	shader.setVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 
 	shader.setVec3("pointLight[0].position", lightPosition);
@@ -319,7 +334,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	shader.setVec3("pointLight[0].specular", glm::vec3(1.0f, 1.0f, 1.0f));
 	shader.setFloat("pointLight[0].constant", 1.0f);
 	shader.setFloat("pointLight[0].linear", 0.009f);
-	shader.setFloat("pointLight[0].quadratic", 0.032f);
+	shader.setFloat("pointLight[0].quadratic", 0.0032f);
 
 	shader.setVec3("pointLight[1].position", glm::vec3(0.0, 0.0f, 0.0f));
 	shader.setVec3("pointLight[1].ambient", glm::vec3(0.0f, 0.0f, 0.0f));
@@ -347,47 +362,222 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	// note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
 	shader.setMat4("projection", projection);
 
-	//PASTO
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	///////////////////////////////////////								OBJETOS											///////////////////////////////////////////////////////////////////////
+	
+	//BASE
 	glBindVertexArray(pastoVAO);
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(70.0f, 0.01f, 90.0f));
+	model = glm::scale(model, glm::vec3(104.0f, 0.0f, 72.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_piso1); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+	
+	//--------------ALAMEDA
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-11.0f, 0.01f, 0.0f));
+	model = glm::scale(model, glm::vec3(82.0f, 0.0f, 44.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.03f, 0.0f));
+	model = glm::scale(model, glm::vec3(60.0f, 0.0f, 40.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_pasto); //Aplicamos una textura
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-	glBindVertexArray(0);
-
-
-	//CASAS
-	glBindVertexArray(VAO);
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(5.0f,1.5f, 0.0f));
-	model = glm::scale(model, glm::vec3(2.0f, 3.0f, 2.0f));
-	shader.setMat4("model", model);
-	shader.setVec3("aColor", 0.0f, 1.0f, 1.0f); //Aplicamos color
-	glBindTexture(GL_TEXTURE_2D, t_dado); //Aplicamos una textura
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
-
-
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 1.5f, 0.0f));
-	model = glm::scale(model, glm::vec3(2.0f, 3.0f, 2.0f));
+	//PASILLOS
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	model = glm::scale(model, glm::vec3(60.0f, 0.0f, 4.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
-	glBindTexture(GL_TEXTURE_2D, t_dado); //Aplicamos una textura
-	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	
-	
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	model = glm::scale(model, glm::vec3(2.0f, 0.0f, 44.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(18 * sizeof(float))); 
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(24 * sizeof(float)));
+
+	//CARRETERA
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(34.0f, 0.02f, 0.0f));
+	model = glm::scale(model, glm::vec3(8.0f, 0.01f, 72.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_carretera); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(6 * sizeof(float)));
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-49.0f, 0.02f, 0.0f));
+	model = glm::scale(model, glm::vec3(8.0f, 0.01f, 72.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_carretera); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(6 * sizeof(float)));
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, 0.02f, -25.0f));
+	model = glm::scale(model, glm::vec3(76.0f, 0.01f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_carretera2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(12 * sizeof(float)));
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, 0.02f, 25.0f));
+	model = glm::scale(model, glm::vec3(76.0f, 0.01f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_carretera2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(12 * sizeof(float)));
 
 	glBindVertexArray(0);
 
+
+	//EDIF1
+	glBindVertexArray(VAO);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-40.0f, 10.0f, -33.0f));
+	model = glm::scale(model, glm::vec3(6.0f, 20.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+	
+	//EDIF2
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(6.0f, 5.0f, -33.0f));
+	model = glm::scale(model, glm::vec3(12.0f, 10.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio3); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIF3
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 15.0f, -33.0f));
+	model = glm::scale(model, glm::vec3(16.0f, 30.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIF4
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-30.0f, 7.5f, 33.0f));
+	model = glm::scale(model, glm::vec3(8.0f, 15.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio21); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-40.0f, 12.5f, 33.0f));
+	model = glm::scale(model, glm::vec3(12.0f, 5.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio22); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-40.0f, 5.0f, 33.0f));
+	model = glm::scale(model, glm::vec3(2.0f, 10.0f, 3.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio23); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIF5 TORRE LATINOAMERICANA
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 4.0f, 32.0f));
+	model = glm::scale(model, glm::vec3(12.0f, 8.0f, 8.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel1); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 10.0f, 32.0f));
+	model = glm::scale(model, glm::vec3(11.0f, 4.0f, 7.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel1); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 24.0f, 32.0f));
+	model = glm::scale(model, glm::vec3(10.0f, 24.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 37.0f, 32.0f));
+	model = glm::scale(model, glm::vec3(9.0f, 2.0f, 5.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel3); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 38.5f, 32.0f));
+	model = glm::scale(model, glm::vec3(8.0f, 1.0f, 4.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 39.5f, 32.0f));
+	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel1); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 44.0f, 32.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 8.0f, 0.5f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_torrel2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIFICIO 6
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(43.0f, 7.5f, 15.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(10.0f, 15.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_iglesia1); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(43.0f, 16.5f, 15.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_iglesia2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);
+
+
+	//-----------------------------MODELOS
 	//DANNY PHANTOM
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.05f, -1.0f));
-	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
 	shader.setMat4("model", model);
 	danny_phantom.Draw(shader);
 
 
-	//CARRO
+	/*//CARRO
 	model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	tmp = model = glm::translate(model, glm::vec3(15.0f, 0.0f, movAuto_z));
 	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
@@ -415,8 +605,29 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	model = glm::translate(tmp, glm::vec3(0.85f, 0.25f, -1.45f));
 	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 	shader.setMat4("model", model);
-	llantas.Draw(shader);	//Izq trase
+	llantas.Draw(shader);	//Izq trase*/
 
+
+	//Mansion -> Models/legoHouse/legoHouse.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(46.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.57f, 1.0f, 1.095f)); //24*6
+	model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	shader.setMat4("model", model);
+	mansionLego.Draw(shader);
+
+	//Lego House -> Models/LegoHouseW/legoHouse.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 0.0f, 33.0f));
+	model = glm::scale(model, glm::vec3(1.7f, 1.85f, 0.7f)); //16*4
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	shader.setMat4("model", model);
+	legoHouse.Draw(shader);
+
+	//Lego Home -> Models/legoHome/legoHome.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 0.0f, 33.0f));
+	model = glm::scale(model, glm::vec3(1.9f, 1.5f, 1.4f)); //8*4
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	shader.setMat4("model", model);
+	legoHome.Draw(shader);
 
 }
 
@@ -458,8 +669,8 @@ int main()
 	//Mis funciones
 	//Datos a utilizar
 	LoadTextures();
-	myData();
-	myData2();
+	casas();
+	planos();
 	glEnable(GL_DEPTH_TEST);
 
 	//For Models
@@ -471,8 +682,10 @@ int main()
 	Model llantasModel = ((char *)"Models/Lambo/Wheel.obj");
 	Model pisoModel = ((char *)"Models/piso/piso.obj");
 	Model danny_phantomModel = ((char *)"Models/danny_phantom/Danny.obj");
+	Model mansionLego = ((char *)"Models/LegoHouse/legoHouse.obj");
+	Model legoHouse = ((char *)"Models/LegoHouseW/legoHouse.obj");
+	Model legoHome = ((char *)"Models/LegoHome/legoHome.obj");
 
-	
 	glm::mat4 projection = glm::mat4(1.0f);	//This matrix is for Projection
 	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	// render loop
@@ -495,7 +708,7 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//display(modelShader, ourModel, llantasModel);
-		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel);
+		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel, mansionLego, legoHouse, legoHome);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
