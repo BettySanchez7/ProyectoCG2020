@@ -1,0 +1,2 @@
+//Lego Casa -> Models/LegoCasa/legoCasa.obj
+model = glm::scale(model, glm::vec3(0.78f, 0.76f, 0.4f)); //8*4
