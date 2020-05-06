@@ -1,0 +1,2 @@
+//Lego Gas Station -> Models/LegoGas/legoGas.obj
+model = glm::scale(model, glm::vec3(0.118f, 0.08f, 0.047f)); //8*4
