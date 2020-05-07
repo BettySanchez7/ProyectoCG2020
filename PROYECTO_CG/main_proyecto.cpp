@@ -69,7 +69,13 @@ unsigned int t_dado,
 			t_carretera2,
 			t_blanco,
 			t_iglesia1,
-			t_iglesia2;
+			t_iglesia2,
+			t_edificio5,
+			t_edificio7_1,
+			t_edificio7_2,
+			t_edificio7_3,
+			t_edificio8,
+			t_edificio9;
 
 //For model
 bool animacion = false;
@@ -138,9 +144,16 @@ void LoadTextures()
 	t_edificio3= generateTextures("Texturas/edificio3.jpg", 0);
 	t_carretera = generateTextures("Texturas/carretera.jpg", 0);
 	t_carretera2 = generateTextures("Texturas/carretera2.jpg", 0);
-	t_blanco = generateTextures("Texturas/Texturaspasillo.jpg", 0);
+	t_blanco = generateTextures("Texturas/ladrillo.jpg", 0);
 	t_iglesia1= generateTextures("Texturas/iglesia1.jpg", 0);
 	t_iglesia2 = generateTextures("Texturas/iglesia1_2.jpg", 0);
+	t_edificio5 = generateTextures("Texturas/edificio5.jpg", 0);
+	t_edificio7_1 = generateTextures("Texturas/edificio7_1.jpg", 0);
+	t_edificio7_2= generateTextures("Texturas/edificio7_2.jpg", 0);
+	t_edificio7_3= generateTextures("Texturas/edificio7_3.jpg", 0);
+	t_edificio8 = generateTextures("Texturas/edificio8.jpg", 0);
+	t_edificio9 = generateTextures("Texturas/edificio9.jpg", 0);
+	
 }
 
 void casas()
@@ -182,6 +195,7 @@ void casas()
 		 0.5f,  0.5f,  0.5f,  0.0f,  1.0f,  0.0f,	0.5f, 0.5f, //V0 -> bottom right 
 		 0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.5f, 0.25f, //V5 -> top right
 		-0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,	0.25f, 0.25f //V7 -> top left
+
 	};
 
 	unsigned int indices[] = {
@@ -317,7 +331,7 @@ void animate(void)
 }
 
 void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny_phantom,
-		Model mansionLego, Model legoHouse, Model legoHome)
+		Model mansionLego, Model legoHouse, Model legoHome, Model legoEhouse, Model legoGas)
 {
 	shader.use();
 
@@ -390,30 +404,30 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 	//PASILLOS
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.05f, 0.0f));
 	model = glm::scale(model, glm::vec3(60.0f, 0.0f, 4.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 	
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.05f, 0.0f));
 	model = glm::scale(model, glm::vec3(2.0f, 0.0f, 44.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.05f, 0.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(18 * sizeof(float))); 
 
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.04f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.05f, 0.0f));
 	shader.setMat4("model", model);
-	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
-	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	shader.setVec3("aColor", 0.0f, 1.0f, 1.0f); //Aplicamos color
+	//glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(24 * sizeof(float)));
 
 	//CARRETERA
@@ -468,11 +482,32 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	//EDIF3
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 15.0f, -33.0f));
-	model = glm::scale(model, glm::vec3(16.0f, 30.0f, 6.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 3.0f, -33.0f));
+	model = glm::scale(model, glm::vec3(16.0f, 6.0f, 6.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
-	glBindTexture(GL_TEXTURE_2D, t_edificio); //Aplicamos una textura
+	glBindTexture(GL_TEXTURE_2D, t_edificio7_2); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 16.0f, -33.0f));
+	model = glm::scale(model, glm::vec3(10.0f, 20.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio7_1); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(14.0f, 13.5f, -33.0f));
+	model = glm::scale(model, glm::vec3(2.0f, 15.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio7_3); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(26.0f, 13.5f, -33.0f));
+	model = glm::scale(model, glm::vec3(2.0f, 15.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio7_3); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	//EDIF4
@@ -550,7 +585,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	//EDIFICIO 6
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(43.0f, 7.5f, 15.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(43.0f, 7.5f, 24.0f));
 	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(10.0f, 15.0f, 6.0f));
 	shader.setMat4("model", model);
@@ -558,7 +593,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glBindTexture(GL_TEXTURE_2D, t_iglesia1); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(43.0f, 16.5f, 15.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(43.0f, 16.5f, 24.0f));
 	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 	shader.setMat4("model", model);
@@ -566,10 +601,27 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glBindTexture(GL_TEXTURE_2D, t_iglesia2); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
+	//EDIFICIO 7
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(27.0f, 15.0f, 33.0f));
+	model = glm::scale(model, glm::vec3(6.0f, 30.0f, 6.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio8); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIFICIO 8
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-20.0f, 15.0f, 34.0f));
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(12.0f, 30.0f, 4.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio9); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
 	glBindVertexArray(0);
 
 
-	//-----------------------------MODELOS
+	//-----------------------------MODELOS--------------------------------------------
 	//DANNY PHANTOM
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(1.0f, 0.05f, -1.0f));
 	model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));
@@ -577,9 +629,9 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	danny_phantom.Draw(shader);
 
 
-	/*//CARRO
+	//CARRO
 	model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	tmp = model = glm::translate(model, glm::vec3(15.0f, 0.0f, movAuto_z));
+	tmp = model = glm::translate(model, glm::vec3(-24.5, 0.0f, movAuto_z));
 	model = glm::scale(model, glm::vec3(0.01f, 0.01f, 0.01f));
 	//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 	shader.setMat4("model", model);
@@ -609,27 +661,42 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 
 
 	//Mansion -> Models/legoHouse/legoHouse.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(46.0f, 0.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.57f, 1.0f, 1.095f)); //24*6
-	model = glm::rotate(model, glm::radians(270.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	//46	
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-40.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.8f, 1.4f, 2.0f)); //24*6
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	shader.setMat4("model", model);
 	mansionLego.Draw(shader);
 
 	//Lego House -> Models/LegoHouseW/legoHouse.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 0.0f, 33.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(15.0f, 0.0f, 33.0f));
 	model = glm::scale(model, glm::vec3(1.7f, 1.85f, 0.7f)); //16*4
 	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	shader.setMat4("model", model);
 	legoHouse.Draw(shader);
 
 	//Lego Home -> Models/legoHome/legoHome.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 0.0f, 33.0f));
-	model = glm::scale(model, glm::vec3(1.9f, 1.5f, 1.4f)); //8*4
-	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 0.0f, -15.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(3.5f, 2.5f, 2.0f)); //8*4
 	shader.setMat4("model", model);
 	legoHome.Draw(shader);
 
+	//Lego E House -> Models/LegoEhouse/legoEhouse.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 0.0f, 4.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(1.2f, 2.0f, 1.5f)); //8*4
+	shader.setMat4("model", model);
+	legoEhouse.Draw(shader);
+
+	//Lego Gas Station -> Models/LegoGas/legoGas.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-26.0f, -0.9f, -34.0f));
+	model = glm::scale(model, glm::vec3(0.318f, 0.16f, 0.066f)); 
+	shader.setMat4("model", model);
+	legoGas.Draw(shader);
+
 }
+
 
 int main()
 {
@@ -685,6 +752,9 @@ int main()
 	Model mansionLego = ((char *)"Models/LegoHouse/legoHouse.obj");
 	Model legoHouse = ((char *)"Models/LegoHouseW/legoHouse.obj");
 	Model legoHome = ((char *)"Models/LegoHome/legoHome.obj");
+	Model legoEhouse = ((char *)"Models/LegoEhouse/legoEhouse.obj");
+	Model legoGas = ((char *)"Models/LegoGas/legoGas.obj");
+	
 
 	glm::mat4 projection = glm::mat4(1.0f);	//This matrix is for Projection
 	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
@@ -708,7 +778,8 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//display(modelShader, ourModel, llantasModel);
-		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel, mansionLego, legoHouse, legoHome);
+		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel, 
+				mansionLego, legoHouse, legoHome, legoEhouse, legoGas);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
