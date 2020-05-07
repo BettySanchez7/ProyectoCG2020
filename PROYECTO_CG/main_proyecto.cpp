@@ -75,7 +75,8 @@ unsigned int t_dado,
 			t_edificio7_2,
 			t_edificio7_3,
 			t_edificio8,
-			t_edificio9;
+			t_edificio9,
+			t_edificio10;
 
 //For model
 bool animacion = false;
@@ -144,7 +145,7 @@ void LoadTextures()
 	t_edificio3= generateTextures("Texturas/edificio3.jpg", 0);
 	t_carretera = generateTextures("Texturas/carretera.jpg", 0);
 	t_carretera2 = generateTextures("Texturas/carretera2.jpg", 0);
-	t_blanco = generateTextures("Texturas/ladrillo.jpg", 0);
+	t_blanco = generateTextures("Texturas/blanco.jpg", 0);
 	t_iglesia1= generateTextures("Texturas/iglesia1.jpg", 0);
 	t_iglesia2 = generateTextures("Texturas/iglesia1_2.jpg", 0);
 	t_edificio5 = generateTextures("Texturas/edificio5.jpg", 0);
@@ -153,7 +154,7 @@ void LoadTextures()
 	t_edificio7_3= generateTextures("Texturas/edificio7_3.jpg", 0);
 	t_edificio8 = generateTextures("Texturas/edificio8.jpg", 0);
 	t_edificio9 = generateTextures("Texturas/edificio9.jpg", 0);
-	
+	t_edificio10= generateTextures("Texturas/edificio10.jpg", 0);
 }
 
 void casas()
@@ -618,6 +619,23 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glBindTexture(GL_TEXTURE_2D, t_edificio9); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
+
+	//EDIFICIO 9
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, 10.0f, -34.0f));
+	model = glm::scale(model, glm::vec3(13.0f, 20.0f, 4.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio10); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIFICIO 10
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 18.0f, 34.0f));
+	model = glm::scale(model, glm::vec3(8.0f, 36.0f, 4.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio23); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
 	glBindVertexArray(0);
 
 
@@ -691,7 +709,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 
 	//Lego Gas Station -> Models/LegoGas/legoGas.obj
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(-26.0f, -0.9f, -34.0f));
-	model = glm::scale(model, glm::vec3(0.318f, 0.16f, 0.066f)); 
+	model = glm::scale(model, glm::vec3(0.318f, 0.26f, 0.066f)); 
 	shader.setMat4("model", model);
 	legoGas.Draw(shader);
 
@@ -757,7 +775,7 @@ int main()
 	
 
 	glm::mat4 projection = glm::mat4(1.0f);	//This matrix is for Projection
-	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
+	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 150.0f);
 	// render loop
 	// While the windows is not closed
 	while (!glfwWindowShouldClose(window))
