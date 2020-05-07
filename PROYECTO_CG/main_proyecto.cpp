@@ -76,7 +76,8 @@ unsigned int t_dado,
 			t_edificio7_3,
 			t_edificio8,
 			t_edificio9,
-			t_edificio10;
+			t_edificio10,
+			t_edificio11;
 
 //For model
 bool animacion = false;
@@ -155,6 +156,7 @@ void LoadTextures()
 	t_edificio8 = generateTextures("Texturas/edificio8.jpg", 0);
 	t_edificio9 = generateTextures("Texturas/edificio9.jpg", 0);
 	t_edificio10= generateTextures("Texturas/edificio10.jpg", 0);
+	t_edificio11= generateTextures("Texturas/edificio11.jpg", 0);
 }
 
 void casas()
@@ -629,11 +631,12 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	//EDIFICIO 10
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 18.0f, 34.0f));
-	model = glm::scale(model, glm::vec3(8.0f, 36.0f, 4.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 17.0f, 34.0f));
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(8.0f, 34.0f, 4.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
-	glBindTexture(GL_TEXTURE_2D, t_edificio23); //Aplicamos una textura
+	glBindTexture(GL_TEXTURE_2D, t_edificio11); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
 	glBindVertexArray(0);
