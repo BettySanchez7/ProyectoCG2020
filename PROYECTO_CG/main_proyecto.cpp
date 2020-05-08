@@ -77,7 +77,8 @@ unsigned int t_dado,
 			t_edificio8,
 			t_edificio9,
 			t_edificio10,
-			t_edificio11;
+			t_edificio11,
+			t_edificio12;
 
 //For model
 bool animacion = false;
@@ -157,6 +158,7 @@ void LoadTextures()
 	t_edificio9 = generateTextures("Texturas/edificio9.jpg", 0);
 	t_edificio10= generateTextures("Texturas/edificio10.jpg", 0);
 	t_edificio11= generateTextures("Texturas/edificio11.jpg", 0);
+	t_edificio12 = generateTextures("Texturas/edificio12.jpg", 0);
 }
 
 void casas()
@@ -639,6 +641,15 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glBindTexture(GL_TEXTURE_2D, t_edificio11); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
 
+	//EDIFICIO 11
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 10.0f, -4.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(10.0f, 20.0f, 4.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_edificio12); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
 	glBindVertexArray(0);
 
 
@@ -697,21 +708,21 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	legoHouse.Draw(shader);
 
 	//Lego Home -> Models/legoHome/legoHome.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 0.0f, -15.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 0.0f, -19.0f));
 	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(3.5f, 2.5f, 2.0f)); //8*4
 	shader.setMat4("model", model);
 	legoHome.Draw(shader);
 
 	//Lego E House -> Models/LegoEhouse/legoEhouse.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 0.0f, 4.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 0.0f, 10.0f));
 	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(1.2f, 2.0f, 1.5f)); //8*4
 	shader.setMat4("model", model);
 	legoEhouse.Draw(shader);
 
 	//Lego Gas Station -> Models/LegoGas/legoGas.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-26.0f, -0.9f, -34.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-26.0f, -1.8f, -34.0f));
 	model = glm::scale(model, glm::vec3(0.318f, 0.26f, 0.066f)); 
 	shader.setMat4("model", model);
 	legoGas.Draw(shader);
@@ -798,7 +809,7 @@ int main()
 		glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		//display(modelShader, ourModel, llantasModel);
+		//display(modelShader, ourMosdel, llantasModel);
 		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel, 
 				mansionLego, legoHouse, legoHome, legoEhouse, legoGas);
 
