@@ -12,5 +12,5 @@ newmtl Material__80
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka rojo.jpg
-	map_Kd rojo.jpg
+	map_Ka rojo.png
+	map_Kd rojo.png

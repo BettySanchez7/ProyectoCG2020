@@ -12,8 +12,8 @@ newmtl Material__4
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka cafe.jpg
-	map_Kd cafe.jpg
+	map_Ka cafe.png
+	map_Kd cafe.png
 
 newmtl Material__5
 	Ns 10.0000
@@ -26,5 +26,5 @@ newmtl Material__5
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka hojas.jpg
-	map_Kd hojas.jpg
+	map_Ka hojas.png
+	map_Kd hojas.png

@@ -12,8 +12,8 @@ newmtl Material__2
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka llanta.jpg
-	map_Kd llanta.jpg
+	map_Ka llanta.png
+	map_Kd llanta.png
 
 newmtl Material__3
 	Ns 10.0000
@@ -26,5 +26,5 @@ newmtl Material__3
 	Kd 0.5880 0.5880 0.5880
 	Ks 0.0000 0.0000 0.0000
 	Ke 0.0000 0.0000 0.0000
-	map_Ka plateado.jpg
-	map_Kd plateado.jpg
+	map_Ka plateado.png
+	map_Kd plateado.png
