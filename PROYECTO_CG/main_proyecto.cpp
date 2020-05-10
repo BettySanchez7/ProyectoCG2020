@@ -340,7 +340,7 @@ void animate(void)
 void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny_phantom,
 		Model mansionLego, Model legoHouse, Model legoHome, Model legoEhouse, Model legoGas, Model legoArbol,
 		Model legoTree, Model legoBanca, Model boteBasura, Model lampara, Model llanta, Model coche,
-		Model kiosko, Model arbol2)
+		Model kiosko)
 {
 	shader.use();
 
@@ -990,18 +990,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	shader.setMat4("model", model);
 	legoTree.Draw(shader);
 
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 0.0f, 3.0f));
-	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-	shader.setMat4("model", model);
-	arbol2.Draw(shader);  
 
-	for (int i = 0.0f; i < 4.0f; i++)
-	{
-		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		shader.setMat4("model", model);
-		arbol2.Draw(shader);
-	}
 
 	//Banca -> Models/LegoObjects/legoBanca.obj
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(-28.0f, 0.0f, 1.8f));
@@ -1089,51 +1078,39 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 
 
 	//Lampara -> Models/LegoObjects/lampara.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-32.0f, 0.0f, 21.0f));
-	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
-	shader.setMat4("model", model);
-	lampara.Draw(shader);
-	for (int i = 0.0f; i < 2.0f; i++)
-	{
-		model = glm::translate(model, glm::vec3(32.0f, 0.0f, 0.0f));
-		shader.setMat4("model", model);
-		lampara.Draw(shader);
-	}
-
-	//Lampara -> Models/LegoObjects/lampara.obj
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(-32.0f, 0.0f, -21.0f));
 	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
 	shader.setMat4("model", model);
 	lampara.Draw(shader);
-	for (int i = 0.0f; i < 2.0f; i++)
-	{
-		model = glm::translate(model, glm::vec3(32.0f, 0.0f, 0.0f));
-		shader.setMat4("model", model);
-		lampara.Draw(shader);
-	}
 
 	//Lampara -> Models/LegoObjects/lampara.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(29.0f, 0.0f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-32.0f, 0.0f, 21.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
+	shader.setMat4("model", model);
+	lampara.Draw(shader);
+
+	//Lampara -> Models/LegoObjects/lampara.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(28.0f, 0.0f, 21.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
+	shader.setMat4("model", model);
+	lampara.Draw(shader);
+
+	//Lampara -> Models/LegoObjects/lampara.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(28.0f, 0.0f, -21.0f));
 	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
 	shader.setMat4("model", model);
 	lampara.Draw(shader);
 
 	//Bote de basura -> Models/LegoObjects/boteBasura.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(6.0f, 0.0f, 0.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-4.0f, 0.0f, -10.0f));
 	model = glm::scale(model, glm::vec3(0.1f, 0.07f, 0.1f));
 	shader.setMat4("model", model);
 	boteBasura.Draw(shader);
 
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
-	shader.setMat4("model", model);
-	llanta.Draw(shader);
-
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
 	shader.setMat4("model", model);
 	kiosko.Draw(shader);
-
 
 }
 
@@ -1202,7 +1179,7 @@ int main()
 	Model llanta = ((char *)"Models/LegoCoche/llanta_carro1.obj");
 	Model carro = ((char *)"Models/LegoCoche/carro1_sinllantas.obj");
 	Model kiosko = ((char *)"Models/kiosko/kiosko.obj");
-	Model arbol2 = ((char *)"Models/LegoObjects/arbol2.obj");
+	//Model arbol2 = ((char *)"Models/LegoObjects/arbol2.obj");
 
 	glm::mat4 projection = glm::mat4(1.0f);	//This matrix is for Projection
 	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 200.0f);
@@ -1228,7 +1205,7 @@ int main()
 		//display(modelShader, ourMosdel, llantasModel);
 		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel, 
 				mansionLego, legoHouse, legoHome, legoEhouse, legoGas, legoArbol, 
-			legoTree, legoBanca, boteBasura, lampara, llanta, carro, kiosko, arbol2);
+			legoTree, legoBanca, boteBasura, lampara, llanta, carro, kiosko);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
