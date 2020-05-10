@@ -32,7 +32,7 @@ GLuint VBO, VAO, EBO;
 GLuint pastoVBO, pastoVAO, pastoEBO;
 
 //Camera
-Camera camera(glm::vec3(0.0f, 0.0f, 3.0f));
+Camera camera(glm::vec3(0.0f, 5.0f, 0.0f)); //0 0 3
 double	lastX = 0.0f,
 lastY = 0.0f;
 bool firstMouse = true;
@@ -78,11 +78,12 @@ unsigned int t_dado,
 			t_edificio9,
 			t_edificio10,
 			t_edificio11,
-			t_edificio12;
+			t_edificio12,
+			t_sky;
 
 //For model
 bool animacion = false;
-float movAuto_z = 0.0f;
+float movAuto_z = 0.0f, i=0.0f, j=0.0f;
 bool avanza = true;
 
 
@@ -159,6 +160,7 @@ void LoadTextures()
 	t_edificio10= generateTextures("Texturas/edificio10.jpg", 0);
 	t_edificio11= generateTextures("Texturas/edificio11.jpg", 0);
 	t_edificio12 = generateTextures("Texturas/edificio12.jpg", 0);
+	t_sky= generateTextures("Texturas/skybox.jpg", 0);
 }
 
 void casas()
@@ -336,17 +338,22 @@ void animate(void)
 }
 
 void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny_phantom,
-		Model mansionLego, Model legoHouse, Model legoHome, Model legoEhouse, Model legoGas)
+		Model mansionLego, Model legoHouse, Model legoHome, Model legoEhouse, Model legoGas, Model legoArbol,
+		Model legoTree, Model legoBanca, Model boteBasura, Model lampara, Model llanta, Model coche,
+		Model kiosko, Model arbol2)
 {
 	shader.use();
 
 	//Setup Advanced Lights
+
+	//DIRECCIONAL
 	shader.setVec3("viewPos", camera.Position);
 	shader.setVec3("dirLight.direction", lightDirection);
 	shader.setVec3("dirLight.ambient", glm::vec3(0.0f, 0.0f, 0.0f));
 	shader.setVec3("dirLight.diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
 	shader.setVec3("dirLight.specular", glm::vec3(1.0f, 1.0f, 1.0f));
 
+	//POSICIONAL
 	shader.setVec3("pointLight[0].position", lightPosition);
 	shader.setVec3("pointLight[0].ambient", glm::vec3(1.0f, 1.0f, 1.0f));
 	shader.setVec3("pointLight[0].diffuse", glm::vec3(1.0f, 1.0f, 1.0f));
@@ -432,7 +439,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.05f, 0.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 0.0f, 1.0f, 1.0f); //Aplicamos color
-	//glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
+	glBindTexture(GL_TEXTURE_2D, t_blanco); //Aplicamos una textura
 	glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void*)(24 * sizeof(float)));
 
 	//CARRETERA
@@ -468,9 +475,18 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	glBindVertexArray(0);
 
 
-	//EDIF1
+	
 	glBindVertexArray(VAO);
 
+	//base
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(150.0f, 80.0f, 100.0f));
+	shader.setMat4("model", model);
+	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
+	glBindTexture(GL_TEXTURE_2D, t_sky); //Aplicamos una textura
+	glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, 0);
+
+	//EDIF1
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(-40.0f, 10.0f, -33.0f));
 	model = glm::scale(model, glm::vec3(6.0f, 20.0f, 6.0f));
 	shader.setMat4("model", model);
@@ -617,7 +633,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	//EDIFICIO 8
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(-20.0f, 15.0f, 34.0f));
 	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(12.0f, 30.0f, 4.0f));
+	model = glm::scale(model, glm::vec3(12.0f, 30.0f, 6.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_edificio9); //Aplicamos una textura
@@ -626,7 +642,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 
 	//EDIFICIO 9
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, 10.0f, -34.0f));
-	model = glm::scale(model, glm::vec3(13.0f, 20.0f, 4.0f));
+	model = glm::scale(model, glm::vec3(13.0f, 20.0f, 6.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_edificio10); //Aplicamos una textura
@@ -644,7 +660,7 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	//EDIFICIO 11
 	model = glm::translate(glm::mat4(1.0f), glm::vec3(44.0f, 10.0f, -4.0f));
 	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::scale(model, glm::vec3(10.0f, 20.0f, 4.0f));
+	model = glm::scale(model, glm::vec3(10.0f, 20.0f, 6.0f));
 	shader.setMat4("model", model);
 	shader.setVec3("aColor", 1.0f, 1.0f, 1.0f); //Aplicamos color
 	glBindTexture(GL_TEXTURE_2D, t_edificio12); //Aplicamos una textura
@@ -722,10 +738,402 @@ void display(Shader shader, Model modelo, Model llantas, Model piso, Model danny
 	legoEhouse.Draw(shader);
 
 	//Lego Gas Station -> Models/LegoGas/legoGas.obj
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-26.0f, -1.8f, -34.0f));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-26.0f, -1.7f, -34.0f));
 	model = glm::scale(model, glm::vec3(0.318f, 0.26f, 0.066f)); 
 	shader.setMat4("model", model);
 	legoGas.Draw(shader);
+
+
+	/*/Arbol -> Models/LegoObjects/legoArbol.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.06f, 0.07f, 0.05f));
+	shader.setMat4("model", model);
+	legoArbol.Draw(shader);*/
+
+
+	//Arbol2 -> Models/LegoObjects/legoTree.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(8.0f, 0.0f, -3.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 4.0f; i++)
+	{
+			model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+			shader.setMat4("model", model);
+			legoTree.Draw(shader);
+	}
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(11.0f, 0.0f, -5.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(14.0f, 0.0f, -7.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(17.0f, 0.0f, -9.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 2.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 0.0f, -11.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 1.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(22.0f, 0.0f, -13.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+
+
+	//Arbol2 -> Models/LegoObjects/legoTree.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(8.0f, 0.0f, 3.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 4.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(11.0f, 0.0f, 5.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(14.0f, 0.0f, 7.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(17.0f, 0.0f, 9.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 2.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(20.0f, 0.0f, 11.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 1.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(22.0f, 0.0f, 13.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	//Arbol2 -> Models/LegoObjects/legoTree.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, 0.0f, -3.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 4.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-11.0f, 0.0f, -5.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-14.0f, 0.0f, -7.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-17.0f, 0.0f, -9.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 2.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-20.0f, 0.0f, -11.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 1.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-22.0f, 0.0f, -13.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+
+	//Arbol2 -> Models/LegoObjects/legoTree.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-8.0f, 0.0f, 3.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 4.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-11.0f, 0.0f, 5.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-14.0f, 0.0f, 7.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 3.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-17.0f, 0.0f, 9.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 2.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-20.0f, 0.0f, 11.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	for (int i = 0.0f; i < 1.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		legoTree.Draw(shader);
+	}
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-22.0f, 0.0f, 13.0f));
+	shader.setMat4("model", model);
+	legoTree.Draw(shader);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 0.0f, 3.0f));
+	model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+	shader.setMat4("model", model);
+	arbol2.Draw(shader);  
+
+	for (int i = 0.0f; i < 4.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(-4.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		shader.setMat4("model", model);
+		arbol2.Draw(shader);
+	}
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-28.0f, 0.0f, 1.8f));
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-18.0f, 0.0f, -1.8f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-10.0f, 0.0f, 1.8f));
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(10.0f, 0.0f, 1.8f));
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(16.0f, 0.0f, -1.8f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(22.0f, 0.0f, 1.8f));
+	model = glm::rotate(model, glm::radians(180.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.8f, 0.0f, -8.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-0.8f, 0.0f, -13.0f));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.8f, 0.0f, -18.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+	
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.8f, 0.0f, -8.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-0.8f, 0.0f, -13.0f));
+	model = glm::rotate(model, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+	//Banca -> Models/LegoObjects/legoBanca.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.8f, 0.0f, -18.0f));
+	model = glm::rotate(model, glm::radians(-90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.55f, 0.5f));
+	shader.setMat4("model", model);
+	legoBanca.Draw(shader);
+
+
+	//Lampara -> Models/LegoObjects/lampara.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-32.0f, 0.0f, 21.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
+	shader.setMat4("model", model);
+	lampara.Draw(shader);
+	for (int i = 0.0f; i < 2.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(32.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		lampara.Draw(shader);
+	}
+
+	//Lampara -> Models/LegoObjects/lampara.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-32.0f, 0.0f, -21.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
+	shader.setMat4("model", model);
+	lampara.Draw(shader);
+	for (int i = 0.0f; i < 2.0f; i++)
+	{
+		model = glm::translate(model, glm::vec3(32.0f, 0.0f, 0.0f));
+		shader.setMat4("model", model);
+		lampara.Draw(shader);
+	}
+
+	//Lampara -> Models/LegoObjects/lampara.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(29.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.5f, 0.25f, 0.25f));
+	shader.setMat4("model", model);
+	lampara.Draw(shader);
+
+	//Bote de basura -> Models/LegoObjects/boteBasura.obj
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(6.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.1f, 0.07f, 0.1f));
+	shader.setMat4("model", model);
+	boteBasura.Draw(shader);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.1f, 0.1f, 0.1f));
+	shader.setMat4("model", model);
+	llanta.Draw(shader);
+
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+	model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+	shader.setMat4("model", model);
+	kiosko.Draw(shader);
+
 
 }
 
@@ -786,10 +1194,18 @@ int main()
 	Model legoHome = ((char *)"Models/LegoHome/legoHome.obj");
 	Model legoEhouse = ((char *)"Models/LegoEhouse/legoEhouse.obj");
 	Model legoGas = ((char *)"Models/LegoGas/legoGas.obj");
-	
+	Model legoArbol = ((char *)"Models/LegoObjects/legoArbol.obj");
+	Model legoTree = ((char *)"Models/LegoObjects/legoTree.obj");
+	Model legoBanca = ((char *)"Models/LegoObjects/legoBanca.obj");
+	Model boteBasura = ((char *)"Models/LegoObjects/boteBasura.obj");
+	Model lampara = ((char *)"Models/LegoObjects/lampara.obj");
+	Model llanta = ((char *)"Models/LegoCoche/llanta_carro1.obj");
+	Model carro = ((char *)"Models/LegoCoche/carro1_sinllantas.obj");
+	Model kiosko = ((char *)"Models/kiosko/kiosko.obj");
+	Model arbol2 = ((char *)"Models/LegoObjects/arbol2.obj");
 
 	glm::mat4 projection = glm::mat4(1.0f);	//This matrix is for Projection
-	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 150.0f);
+	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 200.0f);
 	// render loop
 	// While the windows is not closed
 	while (!glfwWindowShouldClose(window))
@@ -811,7 +1227,8 @@ int main()
 
 		//display(modelShader, ourMosdel, llantasModel);
 		display(modelShader, ourModel, llantasModel, pisoModel, danny_phantomModel, 
-				mansionLego, legoHouse, legoHome, legoEhouse, legoGas);
+				mansionLego, legoHouse, legoHome, legoEhouse, legoGas, legoArbol, 
+			legoTree, legoBanca, boteBasura, lampara, llanta, carro, kiosko, arbol2);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
