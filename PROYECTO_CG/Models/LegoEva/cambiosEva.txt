@@ -1,0 +1,111 @@
+Dentro de la funcion main
+
+Model cuerpoEva = ((char *)"Models/legoEva/cuerpoEva.obj");
+Model pierDerEva = ((char *)"Models/legoEva/pierDerEva.obj");
+Model pierIzqEva = ((char *)"Models/legoEva/pierIzqEva.obj");
+Model braDerEva = ((char *)"Models/legoEva/braDerEva.obj");
+Model braIzqEva = ((char *)"Models/legoEva/braIzqEva.obj");
+Model cabezaEva = ((char *)"Models/legoEva/cabezaLego.obj");
+
+Antes de la función generateTextures
+//Animacion Eva
+float   movTorso_x = 0.0f,
+		movTorso_z = 0.0f,
+		movTorso_y = 0.0f,
+		dirTorso = 0.0f;
+
+bool	road1 = true,
+		road2 = false,
+		road3 = false,
+		descenso = false,
+		reproducir = false;
+
+Dentro de la funcion animate
+//Eva
+	if (reproducir)
+	{
+		if (road1)
+		{
+			movTorso_x -= 0.3f;
+			dirTorso = -90.0f;
+			if (movTorso_x < -12.0f)
+			{
+				road1 = false;
+				road2 = true;
+			}
+		}
+		if (road2)
+		{
+			movTorso_z += 0.3f;
+			dirTorso = 0.0f;
+			if (movTorso_z > 22.0f)
+			{
+				road2 = false;
+				road3 = true;
+			}
+		}
+		if (road3)
+		{
+			movTorso_z -= 0.3f;
+			movTorso_x += 0.162f;
+			dirTorso = 118.61f;
+			if (movTorso_z > 12.5f) {
+				movTorso_y += 0.2f;
+				descenso = true;
+			}
+			if (movTorso_z < 12.5f && descenso)
+				movTorso_y -= 0.12f;
+			if (movTorso_z < 0.0f)
+			{
+				road3 = false;
+				road1 = false;
+				descenso = false;
+			}
+		}		
+	}
+
+En la funcion display
+display(...Model cuerpoEva, Model pierDerEva, Model pierIzqEva,
+		Model braDerEva, Model braIzqEva, Model cabezaEva)
+
+
+dentro de la fucnion display
+//Eva 01
+	model = glm::mat4(1.0f);
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(-3.0 + movTorso_x, movTorso_y, movTorso_z));
+	tmp = model = glm::rotate(model, glm::radians(dirTorso), glm::vec3(0.0f, 1.0f, 0.0f));
+	shader.setMat4("model", model);
+	cuerpoEva.Draw(shader);
+
+	//Pierna Derecha
+	model = glm::translate(tmp, glm::vec3(0.0f, 0.01f, 0.0f));
+	shader.setMat4("model", model);
+	pierDerEva.Draw(shader);
+
+	//Pierna Izquierda
+	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setMat4("model", model);
+	pierIzqEva.Draw(shader);
+
+	//Brazo Derecho
+	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setMat4("model", model);
+	braDerEva.Draw(shader);
+
+	//Brazo Izquierdo
+	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setMat4("model", model);
+	braIzqEva.Draw(shader);
+
+	//Cabeza Eva
+	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setMat4("model", model);
+	cabezaEva.Draw(shader);
+
+
+dentro del main en la llamada a la funcion display
+display(cuerpoEva, pierDerEva, pierIzqEva, braDerEva, braIzqEva, cabezaEva); 
+
+dentro de la funcion myInput
+if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+		reproducir = true;
