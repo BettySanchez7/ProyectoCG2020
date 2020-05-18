@@ -1,0 +1,66 @@
+/*Para la posición inicial del Eva dentro de la función display*/
+
+	//Eva 01
+	model = glm::mat4(1.0f);
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(movTorso_x, movTorso_y, -3.0 + movTorso_z));
+	tmp = model = glm::rotate(model, glm::radians(dirTorso), glm::vec3(0.0f, 1.0f, 0.0f));
+	shader.setMat4("model", model);
+	cuerpoEva.Draw(shader);
+
+
+/*Dentro de la función animate*/
+
+//Eva
+	if (reproducir)
+	{
+		if (road1)
+		{
+			movTorso_z -= 0.3f;
+			dirTorso = 180.0f;
+			if (movTorso_z < -17.0f)
+			{
+				road1 = false;
+				road2 = true;
+			}
+		}
+		if (road2)
+		{
+			movTorso_x -= 0.3f;
+			dirTorso = -90.0f;
+			if (movTorso_x < -22.6f)
+			{
+				road2 = false;
+				road3 = true;
+			}
+		}
+		if (road3)
+		{
+			movTorso_x += 0.3f;
+			movTorso_z += 0.22f;
+			dirTorso = 126.95f;
+			if (movTorso_x < -14.0f) {
+				movTorso_y += 0.2f;
+				descenso = true;
+			}
+			if (movTorso_x > -14.0f && descenso)
+				movTorso_y -= 0.12f;
+			if (movTorso_z > 0.0f)
+			{
+				road3 = false;
+				road1 = false;
+				descenso = false;
+				reproducir = false;
+			}
+		}
+	}
+
+/*Dentro de la función my_input*/
+
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+		reproducir ^= true;
+		movTorso_x = 0.0f;
+		movAuto_y = 0.0f;
+		movTorso_z = 0.0f;
+		dirTorso = 0.0f;
+		road1 = true;
+	}
