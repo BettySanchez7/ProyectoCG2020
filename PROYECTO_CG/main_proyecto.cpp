@@ -109,11 +109,15 @@ recorrido1 = true,
 recorrido2 = false,
 recorrido3 = false,
 recorrido4 = false,
-recorrido5 = false;
+recorrido5 = false,
+recorrido6 = false,
+recorrido7 = false,
+recorrido8 = false;
 float movAuto_z = 0.0f, 
 	movAuto_y=0.0f, 
 	movAuto_x=0.0f, i=0.0, 
-	orienta = 0.0f;
+	orienta = 0.0f,
+	orienta2 = 0.0f;
 bool avanza = true;
 
 
@@ -203,7 +207,7 @@ void LoadTextures()
 	t_edificio10= generateTextures("Texturas/edificio10.jpg", 0);
 	t_edificio11= generateTextures("Texturas/edificio11.jpg", 0);
 	t_edificio12 = generateTextures("Texturas/edificio12.jpg", 0);
-	t_sky= generateTextures("Texturas/skybox.png", 0);
+	t_sky= generateTextures("Texturas/skyboxfinal.jpg", 0);
 }
 void casas2()
 {
@@ -464,7 +468,7 @@ void animate(void)
 		{
 			movAuto_z += 1.0f;
 			orienta = 0.0f;
-			if (movAuto_z > 21.0f)
+			if (movAuto_z > 37.0f)
 			{
 				recorrido1 = false;
 				recorrido2 = true;
@@ -474,8 +478,8 @@ void animate(void)
 		{
 			movAuto_z += 0.5f;
 			movAuto_y += 0.3f;
-			orienta = -33.69;  
-			if (movAuto_z > 28.0f && movAuto_y > 3.0f)
+			orienta = -33.69;
+			if (movAuto_z > 44.0f && movAuto_y > 3.0f)
 			{
 				recorrido2 = false;
 				recorrido3 = true;
@@ -485,7 +489,7 @@ void animate(void)
 		{
 			movAuto_z += 1.0f;
 			orienta = 0.0f;
-			if (movAuto_z > 36.0f)
+			if (movAuto_z > 52.0f)
 			{
 				recorrido3 = false;
 				recorrido4 = true;
@@ -497,7 +501,7 @@ void animate(void)
 			movAuto_z += 0.5f;
 			movAuto_y -= 0.3f;
 			orienta = 33.69;
-			if (movAuto_z > 41.0f && movAuto_y < 0.8f)
+			if (movAuto_z > 57.0f && movAuto_y < 0.8f)
 			{
 				recorrido4 = false;
 				recorrido5 = true;
@@ -506,16 +510,52 @@ void animate(void)
 
 		if (recorrido5)
 		{
+			movAuto_y = 0.0f;
 			movAuto_z += 1.0f;
 			orienta = 0.0;
-			if (movAuto_z > 52.0f)
+			if (movAuto_z > 80.0f)
 			{
 				recorrido5 = false;
-				recorrido1 = false;
+				recorrido6 = true;
 			}
 		}
-		
 
+		if (recorrido6)
+		{
+			movAuto_x += 1.0f;
+			orienta = 0.0f;
+			orienta2 = 90.0;
+			if (movAuto_x > 50.0f)
+			{
+				recorrido6 = false;
+				recorrido7 = true;
+			}
+		}
+
+		if (recorrido7)
+		{
+			movAuto_z -= 1.0f;
+			orienta = 0.0f;
+			orienta2 = 180.0;
+			if (movAuto_z < 0.0f)
+			{
+				recorrido7 = false;
+				recorrido8 = true;
+			}
+		}
+
+		if (recorrido8)
+		{
+			movAuto_x -= 1.0f;
+			orienta = 0.0f;
+			orienta2 = -90.0;
+			if (movAuto_x < 0.0f)
+			{
+				orienta2 = 0.0;
+				recorrido8 = false;
+				recorrido1 = true;
+			}
+		}
 	}
 
 	//Eva
@@ -523,9 +563,9 @@ void animate(void)
 	{
 		if (road1)
 		{
-			movTorso_x -= 0.3f;
-			dirTorso = -90.0f;
-			if (movTorso_x < -12.0f)
+			movTorso_z -= 0.3f;
+			dirTorso = 180.0f;
+			if (movTorso_z < -17.0f)
 			{
 				road1 = false;
 				road2 = true;
@@ -533,9 +573,9 @@ void animate(void)
 		}
 		if (road2)
 		{
-			movTorso_z += 0.3f;
-			dirTorso = 0.0f;
-			if (movTorso_z > 22.0f)
+			movTorso_x -= 0.3f;
+			dirTorso = -90.0f;
+			if (movTorso_x < -22.6f)
 			{
 				road2 = false;
 				road3 = true;
@@ -543,20 +583,21 @@ void animate(void)
 		}
 		if (road3)
 		{
-			movTorso_z -= 0.3f;
-			movTorso_x += 0.162f;
-			dirTorso = 118.61f;
-			if (movTorso_z > 12.5f) {
+			movTorso_x += 0.3f;
+			movTorso_z += 0.22f;
+			dirTorso = 126.95f;
+			if (movTorso_x < -14.0f) {
 				movTorso_y += 0.2f;
 				descenso = true;
 			}
-			if (movTorso_z < 12.5f && descenso)
+			if (movTorso_x > -14.0f && descenso)
 				movTorso_y -= 0.12f;
-			if (movTorso_z < 0.0f)
+			if (movTorso_z > 0.0f)
 			{
 				road3 = false;
 				road1 = false;
 				descenso = false;
+				reproducir = false;
 			}
 		}
 	}
@@ -565,8 +606,9 @@ void animate(void)
 
 void display(Shader shader, Model danny_phantom, Model mansionLego, Model legoHouse, Model legoHome, 
 		Model legoEhouse, Model legoGas, Model legoArbol, Model legoTree, Model legoBanca, Model boteBasura,
-		Model lampara, Model coche, Model kiosko, Model arbol2, Model perro, Model hotdogs, Model cuerpoEva, Model pierDerEva, Model pierIzqEva,
-		Model braDerEva, Model braIzqEva, Model cabezaEva)
+		Model lampara, Model coche, Model kiosko, Model arbol2, Model perro, Model hotdogs, Model cuerpoEva, Model cabezaEva,
+		Model braIzqEva, Model braDerEva)
+
 {
 	shader.use();
 
@@ -1705,8 +1747,9 @@ void display(Shader shader, Model danny_phantom, Model mansionLego, Model legoHo
 
 	model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 	model = glm::rotate(glm::mat4(1.0f), glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
-	model = glm::translate(model, glm::vec3(-25.0f + movAuto_x, movAuto_y, -32.0f + movAuto_z));
+	model = glm::translate(model, glm::vec3(-25.0f + movAuto_x, movAuto_y, -48.0f + movAuto_z));
 	model = glm::rotate(model, glm::radians(orienta), glm::vec3(1.0f, 0.0f, 0.0f));
+	model = glm::rotate(model, glm::radians(orienta2), glm::vec3(0.0f, 1.0f, 0.0f));
 	model = glm::scale(model, glm::vec3(0.15f, 0.15f, 0.15f));
 	shader.setMat4("model", model);
 	coche.Draw(shader);
@@ -1726,35 +1769,35 @@ void display(Shader shader, Model danny_phantom, Model mansionLego, Model legoHo
 
 	//Eva 01
 	model = glm::mat4(1.0f);
-	model = glm::translate(glm::mat4(1.0f), glm::vec3(-3.0 + movTorso_x, movTorso_y, movTorso_z));
+	model = glm::translate(glm::mat4(1.0f), glm::vec3(movTorso_x, movTorso_y, -3.0 + movTorso_z));
 	tmp = model = glm::rotate(model, glm::radians(dirTorso), glm::vec3(0.0f, 1.0f, 0.0f));
 	shader.setMat4("model", model);
 	cuerpoEva.Draw(shader);
 
-	//Pierna Derecha
-	model = glm::translate(tmp, glm::vec3(0.0f, 0.01f, 0.0f));
-	shader.setMat4("model", model);
-	pierDerEva.Draw(shader);
-
-	//Pierna Izquierda
+	//Cabeza Eva
 	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
 	shader.setMat4("model", model);
-	pierIzqEva.Draw(shader);
-
-	//Brazo Derecho
-	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
-	shader.setMat4("model", model);
-	braDerEva.Draw(shader);
+	cabezaEva.Draw(shader);
 
 	//Brazo Izquierdo
 	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
 	shader.setMat4("model", model);
 	braIzqEva.Draw(shader);
 
-	//Cabeza Eva
+	//Brazo Derecho
 	model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
 	shader.setMat4("model", model);
-	cabezaEva.Draw(shader);
+	braDerEva.Draw(shader);
+
+	//Pierna Izquierda
+	/*model = glm::translate(tmp, glm::vec3(0.0f, 0.0f, 0.0f));
+	shader.setMat4("model", model);
+	pierIzqEva.Draw(shader);*/
+
+	//Pierna Derecha
+	/*model = glm::translate(tmp, glm::vec3(0.0f, 0.01f, 0.0f));
+	shader.setMat4("model", model);
+	pierDerEva.Draw(shader);*/
 }
 
 
@@ -1825,11 +1868,11 @@ int main()
 	Model perro = ((char *)"Models/perro/perro.obj");
 	Model hotdogs = ((char *)"Models/hotdogs/carrito_hotdogs.obj");
 	Model cuerpoEva = ((char *)"Models/legoEva/cuerpoEva.obj");
-	Model pierDerEva = ((char *)"Models/legoEva/pierDerEva.obj");
-	Model pierIzqEva = ((char *)"Models/legoEva/pierIzqEva.obj");
-	Model braDerEva = ((char *)"Models/legoEva/braDerEva.obj");
-	Model braIzqEva = ((char *)"Models/legoEva/braIzqEva.obj");
 	Model cabezaEva = ((char *)"Models/legoEva/cabezaLego.obj");
+	Model braIzqEva = ((char *)"Models/legoEva/braIzqEva.obj");
+	Model braDerEva = ((char *)"Models/legoEva/braDerEva.obj");
+	//Model pierIzqEva = ((char *)"Models/legoEva/pierIzqEva.obj");
+	//Model pierDerEva = ((char *)"Models/legoEva/pierDerEva.obj");
 
 	glm::mat4 projection = glm::mat4(1.0f);	//This matrix is for Projection
 	projection = glm::perspective(glm::radians(camera.Zoom), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 200.0f);
@@ -1853,10 +1896,10 @@ int main()
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		//display(modelShader, ourMosdel, llantasModel);
-		display(modelShader, danny_phantomModel, 
-				mansionLego, legoHouse, legoHome, legoEhouse, legoGas, legoArbol, 
-			legoTree, legoBanca, boteBasura, lampara, coche, kiosko, arbol2, perro, hotdogs, cuerpoEva, pierDerEva, 
-			pierIzqEva, braDerEva, braIzqEva, cabezaEva);
+		display(modelShader, danny_phantomModel,
+			mansionLego, legoHouse, legoHome, legoEhouse, legoGas, legoArbol,
+			legoTree, legoBanca, boteBasura, lampara, coche, kiosko, arbol2, perro, hotdogs, cuerpoEva, cabezaEva,
+			braIzqEva, braDerEva);
 
 		// glfw: swap buffers and poll IO events (keys pressed/released, mouse moved etc.)
 		// -------------------------------------------------------------------------------
@@ -1922,8 +1965,14 @@ void my_input(GLFWwindow *window, int key, int scancode, int action, int mode)
 	if (glfwGetKey(window, GLFW_KEY_1) == GLFW_PRESS)
 		luz ^= true;
 
-	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
-		reproducir = true;
+	if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS) {
+		reproducir ^= true;
+		movTorso_x = 0.0f;
+		movAuto_y = 0.0f;
+		movTorso_z = 0.0f;
+		dirTorso = 0.0f;
+		road1 = true;
+	}
 
 }
 
